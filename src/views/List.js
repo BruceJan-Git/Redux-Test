@@ -25,10 +25,6 @@ class List extends React.Component {
   }
 
   handleDouble = (id,e) => {
-    // console.log(this)
-    // console.log('id'+id)
-    // console.log('event'+e)
-    // console.log(e.target.parentNode.nextSibling)
     this.props.showEditInput(id)
     let input = e.target.parentNode.nextSibling
     setTimeout(() => {

@@ -10,6 +10,7 @@ class TodoApp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      currentType: 'all',
       todos: [{
         id: 1,
         Etitle: 'key code',
@@ -18,7 +19,7 @@ class TodoApp extends React.Component {
       }, {
         id: 2,
         Etitle: 'sing song',
-        done: false,
+        done: true,
         isEdit: false
       }]
     }
@@ -34,7 +35,7 @@ class TodoApp extends React.Component {
       Etitle: Etitle,
       done: false
     }
-    this.setState ({
+    this.setState({
       todos: [...this.state.todos, todo]
     })
   }
@@ -44,8 +45,8 @@ class TodoApp extends React.Component {
     let index = todos.findIndex(item => {
       return item.id === id
     })
-    todos.splice(index,1)
-    this.setState ({
+    todos.splice(index, 1)
+    this.setState({
       todos: todos
     })
   }
@@ -59,7 +60,7 @@ class TodoApp extends React.Component {
       }
       return false
     })
-    this.setState ({
+    this.setState({
       todos: todos
     })
   }
@@ -84,13 +85,13 @@ class TodoApp extends React.Component {
       }
       return false
     })
-    this.setState ({
+    this.setState({
       todos: todos
     })
   }
   // 双击编辑时进行的操作
-  EditTask = (id,value) => {
-    console.log(id,value)
+  EditTask = (id, value) => {
+    console.log(id, value)
     let todos = [...this.state.todos]
     todos.some(item => {
       if (item.id === id) {
@@ -99,24 +100,66 @@ class TodoApp extends React.Component {
       }
       return false
     })
-    this.setState ({
+    this.setState({
       todos: todos
     })
   }
-  render() {
+  // 计算未完成任务->done为false
+  handleCount = () => {
+    let num = 0
+    this.state.todos.forEach(item => {
+      if (!item.done) {
+        num += 1
+      }
+    })
+    return num
+  }
+  // 清除已完成任务
+  clearAll = () => {
+    let todos = this.state.todos.filter(item => {
+      return !item.done
+    })
+    this.setState({
+      todos: todos
+    })
+  }
+  // footer底部类型切换
+  handleFilter = (currentType) => {
+    this.setState({
+      currentType: currentType
+    })
+  }
+  // footer功能切换筛选
+  filterList = (currentType) => {
     let { todos } = this.state
+    return todos.filter(item => {
+      if (currentType === 'all') {
+        return true
+      } else if (currentType === 'active' && !item.done) {
+        // 未完成
+        return true
+      } else if (currentType === 'completed' && item.done) {
+        return true
+      } else {
+        return false
+      }
+    })
+  }
+  render() {
+    let { todos, currentType } = this.state
+    todos = this.filterList(currentType)
     return (
       <div>
         <section className="todoapp">
           <Header addTask={this.addTask} />
-          <List 
-          todos={todos}
-          deleteTask={this.deleteTask}
-          toggleItem={this.toggleItem}
-          toggleAll={this.toggleAll}
-          showEditInput={this.showEditInput}
-          EditTask={this.EditTask}/>
-          <Footer />
+          <List
+            todos={todos}
+            deleteTask={this.deleteTask}
+            toggleItem={this.toggleItem}
+            toggleAll={this.toggleAll}
+            showEditInput={this.showEditInput}
+            EditTask={this.EditTask} />
+          <Footer num={this.handleCount()} handleFilter={this.handleFilter} clearAll={this.clearAll} />
         </section>
         <footer className="info">
           <p>Double-click to edit a todo</p>
