@@ -12,16 +12,18 @@ class TodoApp extends React.Component {
     this.state = {
       todos: [{
         id: 1,
-        Etitle: '写代码',
+        Etitle: 'key code',
         done: false,
+        isEdit: false
       }, {
         id: 2,
-        Etitle: '去K歌',
+        Etitle: 'sing song',
         done: true,
+        isEdit: false
       }]
     }
   }
-
+  // 添加etitle/task任务
   addTask = (Etitle) => {
     let ids = this.state.todos.map(item => {
       return item.id
@@ -36,14 +38,26 @@ class TodoApp extends React.Component {
       todos: [...this.state.todos, todo]
     })
   }
-
+  // 删除deleteTask任务
+  deleteTask = (id) => {
+    let todos = [...this.state.todos]
+    let index = todos.findIndex(item => {
+      return item.id === id
+    })
+    todos.splice(index,1)
+    this.setState ({
+      todos: todos
+    })
+  }
   render() {
     let { todos } = this.state
     return (
       <div>
         <section className="todoapp">
           <Header addTask={this.addTask} />
-          <List todos={todos} />
+          <List 
+          todos={todos}
+          deleteTask={this.deleteTask}/>
           <Footer />
         </section>
         <footer className="info">
