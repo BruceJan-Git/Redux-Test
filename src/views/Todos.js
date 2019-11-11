@@ -74,6 +74,35 @@ class TodoApp extends React.Component {
       todos: todos
     })
   }
+  // 双击编辑或取消编辑
+  showEditInput = (id) => {
+    let todos = [...this.state.todos]
+    todos.some(item => {
+      if (item.id === id) {
+        item.isEdit = !item.isEdit
+        return true
+      }
+      return false
+    })
+    this.setState ({
+      todos: todos
+    })
+  }
+  // 双击编辑时进行的操作
+  EditTask = (id,value) => {
+    console.log(id,value)
+    let todos = [...this.state.todos]
+    todos.some(item => {
+      if (item.id === id) {
+        item.Etitle = value
+        return true
+      }
+      return false
+    })
+    this.setState ({
+      todos: todos
+    })
+  }
   render() {
     let { todos } = this.state
     return (
@@ -84,7 +113,9 @@ class TodoApp extends React.Component {
           todos={todos}
           deleteTask={this.deleteTask}
           toggleItem={this.toggleItem}
-          toggleAll={this.toggleAll}/>
+          toggleAll={this.toggleAll}
+          showEditInput={this.showEditInput}
+          EditTask={this.EditTask}/>
           <Footer />
         </section>
         <footer className="info">

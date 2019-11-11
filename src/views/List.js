@@ -13,7 +13,6 @@ class List extends React.Component {
   }
 
   handleChack = (id) => {
-    console.log(id)
     this.props.toggleItem(id)
   }
 
@@ -24,12 +23,32 @@ class List extends React.Component {
       this.props.toggleAll(this.state.isAll)
     })
   }
+
+  handleDouble = (id,e) => {
+    // console.log(this)
+    // console.log('id'+id)
+    // console.log('event'+e)
+    // console.log(e.target.parentNode.nextSibling)
+    this.props.showEditInput(id)
+    let input = e.target.parentNode.nextSibling
+    setTimeout(() => {
+      input&&input.focus()
+    },0)
+  }
+
+  handleEditTask = (id,e) => {
+    console.log('id'+ id)
+    console.log('e'+ e)
+    console.log(this)
+    this.props.EditTask(id,e.target.value)
+  }
+
   render() {
     let { todos } = this.props
     let { isAll } = this.state
     let todoTags = todos.map(item => (
       <li key={item.id} className={[item.done ? 'completed' : '', item.isEdit ? 'editing' : ''].join(' ')}>
-        <div className="view">
+        <div className="view" onDoubleClick={this.handleDouble.bind(this,item.id)}>
           {/* 状态框√ checked属性在全选的时候是动态的添加 */}
           <input className="toggle" type="checkbox" onChange={this.handleChack.bind(this,item.id)} checked={item.done} />
           {/* 输入内容 */}
@@ -37,7 +56,8 @@ class List extends React.Component {
           {/* 删除按钮X */}
           <button className="destroy" onClick={this.handleDelete.bind(this,item.id)}></button>
         </div>
-        <input className="edit" />
+        {/* 编辑状态的输入框 */}
+        <input className="edit" onBlur={this.handleDouble.bind(this,item.id)} onChange={this.handleEditTask.bind(this,item.id)} value={item.Etitle}/>
       </li>
     ))
     return (
