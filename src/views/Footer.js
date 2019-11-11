@@ -20,7 +20,7 @@ class Footer extends React.Component {
   }
 
   handleClear = () => {
-    this.props.clearAll()
+    this.props.handleClear()
   }
   
   render() {

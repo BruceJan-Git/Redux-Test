@@ -25,7 +25,7 @@ class TodoApp extends React.Component {
     }
   }
   // 添加etitle/task任务
-  addTask = (Etitle) => {
+  handleAddTask = (Etitle) => {
     let ids = this.state.todos.map(item => {
       return item.id
     })
@@ -51,7 +51,7 @@ class TodoApp extends React.Component {
     })
   }
   // 控制是否完成或未完成任务
-  toggleItem = (id) => {
+  handleChack = (id) => {
     let todos = [...this.state.todos]
     todos.some(item => {
       if (item.id === id) {
@@ -65,7 +65,7 @@ class TodoApp extends React.Component {
     })
   }
   // 控制所有列表的选中与否
-  toggleAll = (isAll) => {
+  handleCheckAll = (isAll) => {
     let todos = [...this.state.todos]
     todos.map(item => {
       item.done = isAll
@@ -76,7 +76,7 @@ class TodoApp extends React.Component {
     })
   }
   // 双击编辑或取消编辑
-  showEditInput = (id) => {
+  handleDouble = (id) => {
     let todos = [...this.state.todos]
     todos.some(item => {
       if (item.id === id) {
@@ -90,8 +90,7 @@ class TodoApp extends React.Component {
     })
   }
   // 双击编辑时进行的操作
-  EditTask = (id, value) => {
-    console.log(id, value)
+  handleEditTask = (id, value) => {
     let todos = [...this.state.todos]
     todos.some(item => {
       if (item.id === id) {
@@ -115,7 +114,7 @@ class TodoApp extends React.Component {
     return num
   }
   // 清除已完成任务
-  clearAll = () => {
+  handleClear = () => {
     let todos = this.state.todos.filter(item => {
       return !item.done
     })
@@ -151,15 +150,15 @@ class TodoApp extends React.Component {
     return (
       <div>
         <section className="todoapp">
-          <Header addTask={this.addTask} />
+          <Header handleAddTask={this.handleAddTask} />
           <List
             todos={todos}
             deleteTask={this.deleteTask}
-            toggleItem={this.toggleItem}
-            toggleAll={this.toggleAll}
-            showEditInput={this.showEditInput}
-            EditTask={this.EditTask} />
-          <Footer num={this.handleCount()} handleFilter={this.handleFilter} clearAll={this.clearAll} />
+            handleChack={this.handleChack}
+            handleCheckAll={this.handleCheckAll}
+            handleDouble={this.handleDouble}
+            handleEditTask={this.handleEditTask} />
+          <Footer num={this.handleCount()} handleFilter={this.handleFilter} handleClear={this.handleClear} />
         </section>
         <footer className="info">
           <p>Double-click to edit a todo</p>

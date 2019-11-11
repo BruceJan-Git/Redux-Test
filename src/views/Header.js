@@ -17,7 +17,7 @@ class Header extends React.Component {
 
   handleKeyUp = (e) => {
     if (e.keyCode === 13) {
-      this.props.addTask(this.state.Etitle)
+      this.props.handleAddTask(this.state.Etitle)
       this.setState ({
         Etitle: ''
       })

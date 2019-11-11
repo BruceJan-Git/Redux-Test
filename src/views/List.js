@@ -13,19 +13,19 @@ class List extends React.Component {
   }
 
   handleChack = (id) => {
-    this.props.toggleItem(id)
+    this.props.handleChack(id)
   }
 
-  toggleAll = () => {
+  handleCheckAll = () => {
     this.setState ({
       isAll: !this.state.isAll
     },() => {
-      this.props.toggleAll(this.state.isAll)
+      this.props.handleCheckAll(this.state.isAll)
     })
   }
 
   handleDouble = (id,e) => {
-    this.props.showEditInput(id)
+    this.props.handleDouble(id)
     let input = e.target.parentNode.nextSibling
     setTimeout(() => {
       input&&input.focus()
@@ -36,7 +36,7 @@ class List extends React.Component {
     console.log('id'+ id)
     console.log('e'+ e)
     console.log(this)
-    this.props.EditTask(id,e.target.value)
+    this.props.handleEditTask(id,e.target.value)
   }
 
   render() {
@@ -60,7 +60,7 @@ class List extends React.Component {
       <section className="main">
         {/* herder总状态控制框 */}
         <input id="toggle-all" className="toggle-all" type="checkbox" defaultChecked={isAll}/>
-        <label htmlFor="toggle-all" onClick={this.toggleAll}>Mark all as complete</label>
+        <label htmlFor="toggle-all" onClick={this.handleCheckAll}>Mark all as complete</label>
         <ul className="todo-list">
           {todoTags}
         </ul>
