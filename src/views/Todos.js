@@ -18,7 +18,7 @@ class TodoApp extends React.Component {
       }, {
         id: 2,
         Etitle: 'sing song',
-        done: true,
+        done: false,
         isEdit: false
       }]
     }
@@ -63,6 +63,17 @@ class TodoApp extends React.Component {
       todos: todos
     })
   }
+  // 控制所有列表的选中与否
+  toggleAll = (isAll) => {
+    let todos = [...this.state.todos]
+    todos.map(item => {
+      item.done = isAll
+      return false
+    })
+    this.setState({
+      todos: todos
+    })
+  }
   render() {
     let { todos } = this.state
     return (
@@ -72,7 +83,8 @@ class TodoApp extends React.Component {
           <List 
           todos={todos}
           deleteTask={this.deleteTask}
-          toggleItem={this.toggleItem}/>
+          toggleItem={this.toggleItem}
+          toggleAll={this.toggleAll}/>
           <Footer />
         </section>
         <footer className="info">
