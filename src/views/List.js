@@ -6,13 +6,16 @@ class List extends React.Component {
     this.props.deleteTask(id)
   }
 
+  handleChack = (id) => {
+    this.props.toggleItem(id)
+  }
   render() {
     let { todos } = this.props
     let todoTags = todos.map(item => (
       <li key={item.id} className={[item.done ? 'completed' : '', item.isEdit ? 'editing' : ''].join(' ')}>
         <div className="view">
           {/* 状态框√ */}
-          <input className="toggle" type="checkbox" />
+          <input className="toggle" type="checkbox" onChange={this.handleChack.bind(this,item.id)} />
           {/* 输入内容 */}
           <label>{item.Etitle}</label>
           {/* 删除按钮X */}

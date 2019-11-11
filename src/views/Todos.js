@@ -49,6 +49,20 @@ class TodoApp extends React.Component {
       todos: todos
     })
   }
+  // 控制是否完成或未完成任务
+  toggleItem = (id) => {
+    let todos = [...this.state.todos]
+    todos.some(item => {
+      if (item.id === id) {
+        item.done = !item.done
+        return true
+      }
+      return false
+    })
+    this.setState ({
+      todos: todos
+    })
+  }
   render() {
     let { todos } = this.state
     return (
@@ -57,7 +71,8 @@ class TodoApp extends React.Component {
           <Header addTask={this.addTask} />
           <List 
           todos={todos}
-          deleteTask={this.deleteTask}/>
+          deleteTask={this.deleteTask}
+          toggleItem={this.toggleItem}/>
           <Footer />
         </section>
         <footer className="info">
